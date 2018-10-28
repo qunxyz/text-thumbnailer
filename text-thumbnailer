@@ -6,7 +6,7 @@ from PIL import Image
 def make_thumb(src, out, size):
     if size == "":
         size = 128
-    os.system("head -10 %s | convert -font Source-Han-Sans-CN-Regular -pointsize 24 -fill black -page 120x140+5+0 text:-'[0]' +repage %s" % (src, out))
+    os.system("head -10 \"%s\" | convert -font Source-Han-Sans-CN-Regular -pointsize 24 -fill black -page 120x140+5+0 text:-'[0]' +repage %s" % (src, out))
     img = Image.open(out)
     wpercent = (size/float(img.size[0]))
     hsize = int((float(img.size[1])*float(wpercent)))
