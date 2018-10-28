@@ -1,0 +1,41 @@
+#!/usr/bin/env python2
+import os,sys
+from subprocess import call
+from PIL import Image
+
+def make_thumb(src, out, size):
+    if size == "":
+        size = 128
+    os.system("cat %s | convert -background white -font Source-Han-Sans-CN-Regular -pointsize 24 -fill black -page 120x140+5+0 text:-'[0]' +repage %s" % (src, out))
+    img = Image.open(out)
+    wpercent = (size/float(img.size[0]))
+    hsize = int((float(img.size[1])*float(wpercent)))
+    img = img.resize((size,hsize), Image.ANTIALIAS)
+    img.save(out, "PNG")
+    
+    pass
+
+
+def main(argv):
+    i = 0;
+    
+    # initial variables
+    source = ""
+    size = ""
+    output = ""
+
+    for arg in argv:
+        if i == 1:
+            source = argv[i]
+        elif i == 2:
+            output = argv[i]
+        elif i == 3:
+            size = int(argv[i])
+        
+        i += 1
+    
+    make_thumb(source, output, size)
+    pass
+
+if __name__ == '__main__':
+    sys.exit(main(sys.argv))
